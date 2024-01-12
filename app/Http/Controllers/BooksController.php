@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BooksController extends Controller
 {
@@ -28,28 +29,35 @@ class BooksController extends Controller
     {
         $request->validate([
             'title' => 'required|string|unique:books',
-            'author' => 'required|string',
             'publication_date' => 'required|date',
         ]);
-
-        $book = Book::create($request->all());
+        $idLogin = Auth::id();
+        $book = Book::create([
+            'author'=> $idLogin,
+            'title'=> $request->title,
+            'publication_date'=> $request->publication_date
+        ]);
 
         return response()->json($book, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $book = Book::find($id);
+        $request->validate([
+            'title' => 'required|string',
+            'publication_date' => 'required|date',
+            'id'=>'required'
+        ]);
+
+        $book = Book::find($request->id);
 
         if (!$book) {
             return response()->json(['error' => 'Libro no encontrado'], 404);
         }
 
-        $request->validate([
-            'title' => 'required|string',
-            'author' => 'required|string',
-            'publication_date' => 'required|date',
-        ]);
+        if (Auth::id() !== $book->user_id) {
+            return response()->json(['error' => 'No tienes permiso para modificar este libro'], 403);
+        }
 
         $book->update($request->all());
 
@@ -62,6 +70,10 @@ class BooksController extends Controller
 
         if (!$book) {
             return response()->json(['error' => 'Libro no encontrado'], 404);
+        }
+
+        if (Auth::id() !== $book->user_id) {
+            return response()->json(['error' => 'No tienes permiso para eliminar este libro'], 403);
         }
 
         $book->delete();

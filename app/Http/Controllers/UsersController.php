@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UsersController extends Controller
@@ -25,6 +26,33 @@ class UsersController extends Controller
             "user"=>$user,
             "token"=>$token
         ],201);
+    }
+
+
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+        if (!$token = Auth::attempt($credentials)) {
+            return response()->json(['error' => 'Credenciales no válidas'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => Auth::factory()->getTTL() * 60,
+        ]);
+    }
+
+    public function me()
+    {
+        return response()->json(Auth::user());
     }
 
 }
