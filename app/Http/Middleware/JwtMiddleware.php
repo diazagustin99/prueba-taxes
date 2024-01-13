@@ -34,7 +34,6 @@ class JwtMiddleware
                 ],401);
             }
 
-            
             return response()->json([
                 "message"=>'token no funciona'
             ],401);

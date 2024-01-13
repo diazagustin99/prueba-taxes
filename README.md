@@ -7,60 +7,138 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# API Documentation 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Users
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Login
+- **Method:** `POST`
+- **Endpoint:** `/users/login`
+- **Description:** Logs in a user and returns an access token.
+- **Parameters:**
+  - `email` (string, required): User's email address.
+  - `password` (string, required): User's password.
+- **Response:**
+  - `access_token` (string): JWT access token.
+  - `token_type` (string): Token type (bearer).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Register
+- **Method:** `POST`
+- **Endpoint:** `/users/register`
+- **Description:** Registers a new user and returns user details along with an access token.
+- **Parameters:**
+  - `name` (string, required): User's name.
+  - `email` (string, required, unique): User's email address.
+  - `password` (string, required, min:6): User's password.
+- **Response:**
+  - `message` (string): Success message.
+  - `user` (object): User details.
+  - `token` (string): JWT access token.
 
-## Learning Laravel
+### Me
+- **Method:** `GET`
+- **Endpoint:** `/users/me`
+- **Description:** Retrieves the details of the authenticated user.
+- **Authentication:** Requires a valid JWT token.
+- **Response:**
+  - User details.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Books
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Get All Books
+- **Method:** `GET`
+- **Endpoint:** `/books/all`
+- **Description:** Retrieves all books.
+- **Response:**
+  - List of books.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Search Books
+- **Method:** `GET`
+- **Endpoint:** `/books/search`
+- **Description:** Searches for books based on title, author, and publication date.
+- **Parameters:**
+  - `title` (string): Book title.
+  - `author` (string): Book author.
+  - `publication_date` (string): Book publication date (format: 'YYYY-MM-DD').
+- **Response:**
+  - List of matching books.
 
-## Laravel Sponsors
+### Register Book
+- **Method:** `POST`
+- **Endpoint:** `/books/register`
+- **Description:** Registers a new book.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `title` (string, required, unique): Book title.
+  - `publication_date` (string, required, format: 'YYYY-MM-DD'): Book publication date.
+- **Response:**
+  - Newly created book details.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Update Book
+- **Method:** `POST`
+- **Endpoint:** `/books/update`
+- **Description:** Updates an existing book.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `id` (integer, required): Book ID.
+  - `title` (string): New book title.
+  - `publication_date` (string, format: 'YYYY-MM-DD'): New book publication date.
+- **Response:**
+  - Updated book details.
 
-### Premium Partners
+### Delete Book
+- **Method:** `POST`
+- **Endpoint:** `/books/delete`
+- **Description:** Deletes an existing book.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `id` (integer, required): Book ID.
+- **Response:**
+  - Success message.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Reviews
 
-## Contributing
+### Get All Reviews for a Book
+- **Method:** `GET`
+- **Endpoint:** `/reviews/all`
+- **Description:** Retrieves all reviews for a specific book.
+- **Parameters:**
+  - `id_book` (integer, required): ID of the book.
+- **Response:**
+  - List of reviews for the specified book.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Get Review Details
+- **Method:** `GET`
+- **Endpoint:** `/reviews/show`
+- **Description:** Retrieves details of a specific review.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `id` (integer, required): ID of the review.
+- **Response:**
+  - Details of the specified review.
 
-## Code of Conduct
+### Register Review
+- **Method:** `POST`
+- **Endpoint:** `/reviews/register`
+- **Description:** Registers a new review for a book.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `book_id` (integer, required): ID of the book.
+  - `review_text` (string, required): Text of the review.
+  - `rating` (integer, required, between: 1-5): Rating of the review.
+- **Response:**
+  - Newly created review details.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Update Review
+- **Method:** `POST`
+- **Endpoint:** `/reviews/update`
+- **Description:** Updates an existing review.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `id` (integer, required): ID of the review.
+  - `review_text` (string): New text of the review.
+  - `rating` (integer, between: 1-5): New rating of the review.
+- **Response:**
+  - Updated review details.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Delete Review

@@ -14,9 +14,12 @@ class BooksController extends Controller
         return response()->json($books);
     }
 
-    public function show($id)
+    public function show(Request $request)
     {
-        $book = Book::find($id);
+        $this->validate($request, [
+            'id'=>'required|exists:books,id'
+        ]);
+        $book = Book::find($request->id);
 
         if (!$book) {
             return response()->json(['error' => 'Libro no encontrado'], 404);
@@ -44,8 +47,8 @@ class BooksController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
-            'publication_date' => 'required|date',
+            'title' => 'sometimes|required|string',
+            'publication_date' => 'sometimes|required|date',
             'id'=>'required'
         ]);
 
@@ -55,7 +58,7 @@ class BooksController extends Controller
             return response()->json(['error' => 'Libro no encontrado'], 404);
         }
 
-        if (Auth::id() !== $book->user_id) {
+        if (Auth::id() !== $book->author) {
             return response()->json(['error' => 'No tienes permiso para modificar este libro'], 403);
         }
 
@@ -64,9 +67,13 @@ class BooksController extends Controller
         return response()->json($book);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $book = Book::find($id);
+        $this->validate($request, [
+            'id'=>'required'
+        ]);
+
+        $book = Book::find($request->id);
 
         if (!$book) {
             return response()->json(['error' => 'Libro no encontrado'], 404);

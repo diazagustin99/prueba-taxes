@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->foreign('author')->references('id')->on('users');
+
         });
 
         Schema::table('reviews', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
 

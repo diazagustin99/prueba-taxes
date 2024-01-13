@@ -13,9 +13,9 @@ class UsersController extends Controller
     public function create(Request $request)
     {
         $this->validate($request,[
-            'name'=>"required|max:255",
+            "name"=>"required|max:255",
             "email"=>"required|unique:users|email",
-            "password"=>"requred|min:6"
+            "password"=>"required|min:6"
         ]);
 
         $user = User::create($request->only(['name', 'email', 'password']));
@@ -28,13 +28,11 @@ class UsersController extends Controller
         ],201);
     }
 
-
-
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        
-        if (!$token = Auth::attempt($credentials)) {
+
+        if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Credenciales no válidas'], 401);
         }
 
@@ -45,8 +43,7 @@ class UsersController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60,
+            'token_type' => 'bearer'
         ]);
     }
 
