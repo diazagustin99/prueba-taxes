@@ -20,30 +20,38 @@ Make sure you have the following prerequisites installed on your local machine:
 
 ## Usage Instructions
 
+```bash
 # Clone the Repository
 git clone https://github.com/diazagustin99/prueba-taxes.git
-
+```
+```bash
 # Navigate to the Project Directory
 cd your-project
-
+```
+```bash
 # Copy the Environment File
 cp .env.example .env
-
+```
+```bash
 # Start Containers with Laravel Sail
 ./vendor/bin/sail up
-
+```
+```bash
 # Install Composer Dependencies
 ./vendor/bin/sail composer install
-
+```
+```bash
 # Generate JWT Keys
 ./vendor/bin/sail artisan jwt:secret
-
+```
+```bash
 # Generate Application Key
 ./vendor/bin/sail artisan key:generate
-
+```
+```bash
 # Run Migrations and Seeders
 ./vendor/bin/sail artisan migrate --seed
-
+```
 # Access the API: http://localhost
 
 # Stop Containers
