@@ -20,7 +20,6 @@ Make sure you have the following prerequisites installed on your local machine:
 
 ## Usage Instructions
 
-```bash
 # Clone the Repository
 git clone https://github.com/diazagustin99/prueba-taxes.git
 
