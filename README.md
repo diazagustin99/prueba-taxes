@@ -7,6 +7,50 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# TEST-TAXES
+
+
+## Prerequisites
+
+Make sure you have the following prerequisites installed on your local machine:
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+## Usage Instructions
+
+```bash
+# Clone the Repository
+git clone https://github.com/diazagustin99/prueba-taxes.git
+
+# Navigate to the Project Directory
+cd your-project
+
+# Copy the Environment File
+cp .env.example .env
+
+# Start Containers with Laravel Sail
+./vendor/bin/sail up
+
+# Install Composer Dependencies
+./vendor/bin/sail composer install
+
+# Generate JWT Keys
+./vendor/bin/sail artisan jwt:secret
+
+# Generate Application Key
+./vendor/bin/sail artisan key:generate
+
+# Run Migrations and Seeders
+./vendor/bin/sail artisan migrate --seed
+
+# Access the API: http://localhost
+
+# Stop Containers
+./vendor/bin/sail down
+
+
 # API Documentation 
 
 ## Users
@@ -142,3 +186,11 @@
   - Updated review details.
 
 ### Delete Review
+- **Method:** `POST`
+- **Endpoint:** `/reviews/delete`
+- **Description:** Deletes an existing review.
+- **Authentication:** Requires a valid JWT token.
+- **Parameters:**
+  - `id` (integer, required): review ID.
+- **Response:**
+  - Success message.
