@@ -128,7 +128,7 @@ cp .env.example .env
   - Newly created book details.
 
 ### Update Book
-- **Method:** `POST`
+- **Method:** `PUT`
 - **Endpoint:** `/books/update`
 - **Description:** Updates an existing book.
 - **Authentication:** Requires a valid JWT token.
@@ -140,7 +140,7 @@ cp .env.example .env
   - Updated book details.
 
 ### Delete Book
-- **Method:** `POST`
+- **Method:** `DELETE`
 - **Endpoint:** `/books/delete`
 - **Description:** Deletes an existing book.
 - **Authentication:** Requires a valid JWT token.
@@ -183,7 +183,7 @@ cp .env.example .env
   - Newly created review details.
 
 ### Update Review
-- **Method:** `POST`
+- **Method:** `PUT`
 - **Endpoint:** `/reviews/update`
 - **Description:** Updates an existing review.
 - **Authentication:** Requires a valid JWT token.
@@ -195,7 +195,7 @@ cp .env.example .env
   - Updated review details.
 
 ### Delete Review
-- **Method:** `POST`
+- **Method:** `DELETE`
 - **Endpoint:** `/reviews/delete`
 - **Description:** Deletes an existing review.
 - **Authentication:** Requires a valid JWT token.

@@ -30,8 +30,8 @@ Route::prefix('books')->group(function () {
     Route::get('search', [BooksController::class, 'search']);
     Route::middleware('jwt.verify')->group(function () {
         Route::post('register', [BooksController::class, 'create']);
-        Route::post('update', [BooksController::class, 'update']);
-        Route::post('delate', [BooksController::class, 'destroy']);
+        Route::put('update', [BooksController::class, 'update']);
+        Route::delete('delate', [BooksController::class, 'destroy']);
     });
 });
 
@@ -40,8 +40,8 @@ Route::prefix('reviews')->group(function () {
     Route::get('show', [ReviewsController::class, 'show']);
     Route::middleware('jwt.verify')->group(function () {
         Route::post('register', [ReviewsController::class, 'store']);
-        Route::post('update', [ReviewsController::class, 'update']);
-        Route::post('delate', [ReviewsController::class, 'destroy']);
+        Route::put('update', [ReviewsController::class, 'update']);
+        Route::delete('delate', [ReviewsController::class, 'destroy']);
     });
 });
 
