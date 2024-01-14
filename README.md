@@ -52,11 +52,13 @@ cp .env.example .env
 # Run Migrations and Seeders
 ./vendor/bin/sail artisan migrate --seed
 ```
+```bash
 # Access the API: http://localhost
-
+```
+```bash
 # Stop Containers
 ./vendor/bin/sail down
-
+```
 
 # API Documentation 
 
