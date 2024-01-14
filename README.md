@@ -32,6 +32,10 @@ cd your-project
 # Copy the Environment File
 cp .env.example .env
 ```
+
+> [!CAUTION]
+> It is recommended to use it in a Linux environment, or if used on Windows, through wsl.
+
 ```bash
 # Start Containers with Laravel Sail
 ./vendor/bin/sail up
