@@ -34,7 +34,7 @@ cp .env.example .env
 ```
 
 > [!CAUTION]
-> It is recommended to use it in a Linux environment, or if used on Windows, through wsl.
+> It is recommended to run in Linux or macOS environments; if used on Windows, it should be done through WSL (Windows Subsystem for Linux).
 
 ```bash
 # Start Containers with Laravel Sail
